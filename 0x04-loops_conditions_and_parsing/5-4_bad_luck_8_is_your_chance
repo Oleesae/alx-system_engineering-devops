@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# This script displays "Best School"
+#+10 times using the while loop
+#+and nested if condition
+
+var=0
+while [ "$var" -lt 10 ];
+do
+    ((++var))
+    if [ "$var" -eq 4 ]
+    then
+        echo "bad luck"
+    elif [ "$var" -eq 8 ]
+    then
+         echo "good luck"
+    else
+        echo "Best School"
+    fi
+done
