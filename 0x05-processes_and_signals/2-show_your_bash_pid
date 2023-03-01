@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This script displays pid containing bash
+# shellcheck disable=SC2009
+
+ps=$(ps -auxf | grep bash)
+echo "$ps"
