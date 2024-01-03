@@ -7,12 +7,9 @@ remote_name=$3
 private_key=$4
 
 # Check argument count
-if [[ $# -lt 3 ]]
+if [[ $# -lt 4 ]]
 then # echo usage
     echo 'Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY'
-elif [[ $# -eq 3 ]] # if args equal 3
-then
-    scp "$file_path" "$remote_name"@"$remote_ip":/home/"$remote_name"
-else
-    scp -i "$private_key" "$file_path" "$remote_name"@"$remote_ip":/home/"$remote_name"
 fi
+
+scp -o 'StrictHostKeyChecking=no' -i "$private_key" "$file_path" "$remote_name"@"$remote_ip":/home/"$remote_name"
