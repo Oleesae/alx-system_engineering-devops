@@ -18,7 +18,7 @@ SERVER_CONFIG=\
 	}
 }"
 
-echo -e '$SERVER_CONFIG' | sudo tee /etc/nginx/sites-enabled/default
+echo -e "$SERVER_CONFIG" | sudo tee /etc/nginx/sites-enabled/default
 
 sudo systemctl reload nginx
 sudo systemctl restart nginx
