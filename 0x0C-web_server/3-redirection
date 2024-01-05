@@ -3,9 +3,8 @@
 apt-get update
 apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
-mkdir -p /var/www/html/
-sudo chmod -R 755 /var/www
-echo 'Hello World!' > /var/www/html/index.html
+echo 'Hello World!' | sudo tee /var/www/html/index.html
+sudo service nginx start
 SERVER_CONFIG=\
 "server {
 	listen 80 default_server;
@@ -14,17 +13,13 @@ SERVER_CONFIG=\
 	index index.html index.htm index.nginx-debian.html;
 	server_name _;
 	location / {
+  rewrite ^/redirect_me(.*) http://www.google.com permanent;
 		try_files \$uri \$uri/ =404;
-	}
-	if (\$request_filename ~ redirect_me){
-		rewrite ^ https://sketchfab.com/bluepeno/models permanent;
 	}
 }"
 
-bash -c "echo -e '$SERVER_CONFIG' > /etc/nginx/sites-enabled/default"
+echo -e '$SERVER_CONFIG' | sudo tee /etc/nginx/sites-enabled/default
 
-if [ "$(pgrep -c nginx)" -le 0 ]; then
-	service nginx start
-else
-	service nginx restart
-fi
+sudo systemctl reload nginx
+sudo systemctl restart nginx
+exit
