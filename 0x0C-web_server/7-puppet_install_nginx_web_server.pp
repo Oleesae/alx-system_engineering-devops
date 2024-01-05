@@ -1,3 +1,4 @@
+# configures an nginx server, 301 and 404 redirection
 class nginx_server {
     package { 'nginx':
         ensure => installed,
