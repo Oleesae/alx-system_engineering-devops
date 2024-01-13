@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# install and setup HAProxy on brand new server
+sudo apt-get install -y --no-install-recommends software-properties-common
+sudo add-apt-repository -y ppa:vbernat/haproxy-2.9
+sudo apt update -y
+sudo apt-get install -y haproxy=2.9.\*
+
+# configure HAProxy
+WEB01="54.160.68.93"
+WEB02="52.86.29.142"
+CONFIG=\
+"
+frontend http
+	bind *:80
+	option forwardfor
+	default_backend web_backend
+
+backend web_backend
+	balance roundrobin
+	server web01 $WEB01:80 check
+	server web02 $WEB02:80 check
+"
+
+if [ "$(grep -c $WEB01 /etc/haproxy/haproxy.cfg)" -eq 0 ]; then
+	echo -e "$CONFIG" | sudo tee -a /etc/haproxy/haproxy.cfg
+fi
+
+if [ "$(pgrep -cf haproxy)" -eq 0 ]; then
+	sudo service haproxy start
+else
+	sudo service haproxy restart
+fi
