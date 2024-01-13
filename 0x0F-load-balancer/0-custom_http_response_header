@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Installs, configures, and starts the server
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+echo 'Hello World!' | sudo tee /var/www/html/index.html
+sudo service nginx restart
+SERVER_CONFIG=\
+"server {\n\tlisten 80 default_server;\n\tlisten [::]:80 default_server;\n\troot /var/www/html;\n\tindex index.html index.htm index.nginx-debian.html;\n\tserver_name _;\n\tlocation / {\n\t\tadd_header X-Served-By \$hostname;\n    rewrite ^/redirect_me(.*) http://www.yahoo.com permanent;\n\t\ttry_files \$uri \$uri/ =404;\n\t}\n\terror_page 404 /404.html;\n\tlocation = /404.html {\n\t\troot /usr/share/nginx/html;\n\t\tinternal;\n\t}\n}"
+
+echo -e "$SERVER_CONFIG" | sudo tee /etc/nginx/sites-enabled/default
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+sudo service nginx restart
