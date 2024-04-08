@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-"""Exports to-do list information for a given employee ID to CSV format"""
+"""Exports to-do list information for a given employee ID to CSV format."""
 import csv
-import request
+import requests
 import sys
 
-if ____name__ == "__main__":
+if __name__ == "__main__":
     user_id = sys.argv[1]
     url = "https://jsonplaceholder.typicode.com/"
     user = requests.get(url + "users/{}".format(user_id)).json()
@@ -15,4 +15,4 @@ if ____name__ == "__main__":
         writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         [writer.writerow(
             [user_id, username, t.get("completed"), t.get("title")]
-        ) for t in todos]
+         ) for t in todos]
