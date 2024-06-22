@@ -1,5 +1,5 @@
 Host 181650-web-01
- HostName 54.175.13.73
+ HostName 52.23.177.128
  User ubuntu
  IdentityFile ~/.ssh/school
  IdentityOnly yes

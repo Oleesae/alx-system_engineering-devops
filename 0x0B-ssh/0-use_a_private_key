@@ -2,4 +2,4 @@
 # Connects to my server with key in ~/.ssh/school
 #+and username ubuntu
 
-ssh -i ~/.ssh/school ubuntu@54.175.13.73
+ssh -i ~/.ssh/school ubuntu@52.23.177.128
